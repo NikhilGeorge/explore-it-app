@@ -27,8 +27,6 @@ interface ResultColumnsProps {
 
 export const ResultColumns: React.FC<ResultColumnsProps> = ({ 
   searchTerm, 
-  includeRestaurants, 
-  includeReligious 
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [activities, setActivities] = useState<ActivityItem[]>([])
@@ -62,6 +60,7 @@ export const ResultColumns: React.FC<ResultColumnsProps> = ({
           return JSON.parse(cleanedText)
         } catch (jsonError) {
           // If direct parsing fails, try extracting JSON-like content
+          console.error('Failed to parse', jsonError)
           const jsonMatch = cleanedText.match(/\[.*\]/s)
           if (jsonMatch) {
             try {
@@ -141,6 +140,7 @@ export const ResultColumns: React.FC<ResultColumnsProps> = ({
           return parsed
         } catch (jsonError) {
           // More aggressive extraction strategies
+          console.error('Failed to parse JSON', jsonError)
           try {
             // Extract object between first { and last }
             const objectMatch = cleanedText.match(/\{.*\}/s)
