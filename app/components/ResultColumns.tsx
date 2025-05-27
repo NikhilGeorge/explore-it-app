@@ -198,15 +198,15 @@ export const ResultColumns: React.FC<ResultColumnsProps> = ({
   return (
     <div className="flex w-full h-[calc(100vh-100px)]">
       {/* Left Column - Activities List */}
-      <div className="w-1/3 bg-gray-100 p-4 overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4">One-Day Itinerary</h2>
+      <div className={`w-1/3 p-4 overflow-y-auto ${typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'bg-gray-900' : 'bg-gray-100'}`}>
+        <h2 className={`text-xl font-bold mb-4 ${typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'text-gray-100' : ''}`}>One-Day Itinerary</h2>
         {activities.map((activity, index) => (
           <div 
             key={index} 
-            className="mb-4 p-3 bg-white rounded-lg shadow-md relative"
+            className={`mb-4 p-3 rounded-lg shadow-md relative ${typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'bg-gray-800 text-gray-100' : 'bg-white'}`}
           >
             <h3 className="font-bold text-lg">{activity.activity}</h3>
-            <p className="text-sm text-gray-600">{activity.type}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">{activity.type}</p>
             <p className="mt-2">{activity.description}</p>
             <button 
               onClick={() => replaceActivity(index)}
@@ -217,9 +217,8 @@ export const ResultColumns: React.FC<ResultColumnsProps> = ({
           </div>
         ))}
       </div>
-      
       {/* Right Column - Map */}
-      <div className="w-2/3 bg-white">
+      <div className={`w-2/3 ${typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'bg-gray-900' : 'bg-white'}`}>
         <MapComponent activities={activities} />
       </div>
     </div>

@@ -9,6 +9,7 @@ export default function Home() {
     includeRestaurants: boolean;
     includeReligious: boolean;
   } | null>(null)
+  const [darkMode, setDarkMode] = useState(false)
 
   const handleSearch = (
     searchTerm: string, 
@@ -25,9 +26,24 @@ export default function Home() {
     }
   }
 
+  const handleToggleDarkMode = () => {
+    setDarkMode((prev) => {
+      if (!prev) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+      return !prev
+    })
+  }
+
   return (
-    <main className="flex min-h-screen flex-col">
-      <SearchRow onSearch={handleSearch} />
+    <main className={`flex min-h-screen flex-col ${darkMode ? 'bg-gray-900' : ''}`}>
+      <SearchRow 
+        onSearch={handleSearch} 
+        onToggleDarkMode={handleToggleDarkMode} 
+        darkMode={darkMode} 
+      />
       {searchData && (
         <ResultColumns 
           searchTerm={searchData.searchTerm}
